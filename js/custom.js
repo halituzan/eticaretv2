@@ -27,3 +27,20 @@
 // show();
 // hide();
 
+var sellersDetails = document.getElementById("top-main");
+
+fetch('./users.json')
+  .then(response => response.json())
+  .then((data) => {
+    
+    data.forEach((userlist) => {
+      
+       sellersDetails.innerHTML += `
+       <div class='sellers h3-flex-jc-se h3-align-fs'>
+       <div>
+       <img src='${userlist.images}' alt=''></div>
+       <div class="h3-flexd-jc-sp h3-h100"><p class="mb-0 ms-1"><a href='./sellers.html'>${userlist.name}</a></p><p class="mb-0 ms-1"><a href='./sellers.html'>${userlist.orders}</a> Satış</p></div></div>`;
+    });
+})
+.catch ((error) => console.log("Error"));
+
