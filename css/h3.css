@@ -1,15 +1,7 @@
-.h3-flex,.h3-flex-jc-sp, .h3-flex-jc-se,.h3-flex-jc-sa,.h3-align-c,.h3-flexd-jc-sp,.h3-flexd-jc-se {
+.h3-flex,.h3-flex-jc-sp, .h3-flex-jc-se,.h3-flex-jc-sa,.h3-align-c,.h3-flexd-jc-sp,.h3-flexd-jc-se,.h3-flex-jc-c,.h3-flex-jc-fe,.h3-flex-jc-fs {
     display: flex;
 }
-.h3-flex-jc-sp{
-    justify-content: space-between;
-}
-.h3-flex-jc-se{
-    justify-content: space-evenly;
-}
-.h3-flex-jc-sa{
-    justify-content: space-around;
-}
+
 .h3-flex-wrap{
     flex-wrap: wrap;
 }
@@ -27,6 +19,25 @@
 .h3-flexd-jc-se {
     flex-direction: column;
     justify-content: space-evenly;
+}
+
+.h3-flex-jc-sp{
+    justify-content: space-between;
+}
+.h3-flex-jc-se{
+    justify-content: space-evenly;
+}
+.h3-flex-jc-sa{
+    justify-content: space-around;
+}
+.h3-flex-jc-c{
+    justify-content: center;
+}
+.h3-flex-jc-fe{
+    justify-content: flex-end;
+}
+.h3-flex-jc-fs{
+    justify-content: flex-start;
 }
 
 /*Margins*/
