@@ -29,34 +29,46 @@ fetch('./users.json')
 .catch ((error) => console.log("Error"));
 
 
+var productDetails = document.getElementById("encoksatanlar");
+let newProductDetails = document.getElementById("enyeniler");
 
-
-
-// var article = document.getElementsByClassName("sellers-article");
-// var showCart = document.getElementsByClassName("sepet");
-
-// // for(i=0;i<=article.length;i++){
-// //     article[i].addEventListener("mouseover", ()=>{
-// //         showCart.style.display="flex";
-// //         })
-// //     article[i].addEventListener("mouseout", ()=>{
-// //         showCart.style.display="none";
-// //         })
-// // }
-
-// function show(){
+fetch('./product.json')
+  .then(response => response.json())
+  .then((productData) => {
     
-//     var showCart = document.getElementsByClassName("sepet");  
-//     for (i=0;i<=showCart.length;i++){
-//         showCart[i].style.display="flex";
-//     }  
-    
-// }
-// function hide(){
-//     var showCart = document.getElementsByClassName("sepet");  
-//     for (j=0;j<=showCart.length;j++){
-//         showCart[j].style.display="none";
-//     }  
-// }
-// show();
-// hide();
+    productData.forEach((productList) => {
+      
+       productDetails.innerHTML += `<div class="article h3-align-c h3-flex-jc-se">
+       <div class="article-img">
+           <img src="${productList.images}" alt="${productList.title}">
+       </div>
+       <div class="article-details h3-flexd-jc-se">
+           <h3 class="article-h3">${productList.title}</h3>
+       </div>
+   </div>`;
+       newProductDetails.innerHTML += `
+       <div class="icerik">
+                                <figure>
+                                    <img src="${productList.images}" alt="${productList.title}">
+                                </figure>
+                                <div class="sepet yeni-urunler">
+                                    <a href="#">
+                                        <span class="material-icons">favorite</span>
+                                    </a>
+                                    <a href="#">
+                                        <span class="material-icons">shopping_cart_checkout</span>
+                                    </a>
+                                    <a href="#">
+                                        <span class="material-icons">checklist</span>
+                                    </a>
+                                </div>
+                                <h3>${productList.title}</h3>
+                                <span class="h3-flex h3-flex-jc-sp" style="font-weight:bold;color:black;font-size:1.5rem">
+                                    <p>Fiyat: <a href="#">${productList.price} ${productList.currency}</a></p>
+                                    <p class="h3-w50"><span style="text-decoration:line-through;color:grey;">${productList.upPrice} ${productList.currency}</span></p>
+                                </span>
+      </div>
+       `;
+    });
+})
+.catch ((error) => console.log("Error"));
