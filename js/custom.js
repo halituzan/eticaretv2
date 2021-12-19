@@ -36,7 +36,7 @@ fetch('./product.json')
   .then(response => response.json())
   .then((productData) => {
     
-    productData.forEach((productList) => {
+    productData[0].bestsorder.forEach((productList) => {
       
        productDetails.innerHTML += `<div class="article h3-align-c h3-flex-jc-se">
        <div class="article-img">
@@ -65,7 +65,7 @@ fetch('./product.json')
                                 <h3>${productList.title}</h3>
                                 <span class="h3-flex h3-flex-jc-sp" style="font-weight:bold;color:black;font-size:1.5rem">
                                     <p>Fiyat: <a href="#">${productList.price} ${productList.currency}</a></p>
-                                    <p class="h3-w50"><span style="text-decoration:line-through;color:grey;">${productList.upPrice} ${productList.currency}</span></p>
+                                    <p class="h3-w50"><span style="text-decoration:line-through;color:grey;">${productList.upPrice} ${productList.bestsorder.currency}</span></p>
                                 </span>
       </div>
        `;

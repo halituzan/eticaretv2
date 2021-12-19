@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lobster&family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/h3.css" />
+    <link rel="stylesheet" href="./css/query.min.css" />
+    <title>Karar veremiyor musunuz?</title>
+
+    <!-- <style>
+         #yasAraligi,#konsept,#urunAlani,#kararButonu {
+            display:none;
+        }
+    </style> -->
+</head>
+
+<body>
+
+    <img src="./images/ornament.png" alt="ornament" class="ornament-bg">
+    <div class="gift-bg"></div>
+    <!-- <div class="gift-bg rotate"></div> -->
+
+
+
+
+    <div class="container d-flex justify-content-center h-100 w-100 align-items-center my-5 text-center flex-column">
+
+        <form id="karar">
+            <div class="start mt-5" id="start">
+                <h3 class="my-5 py-5 w-75 text-center m-auto">Hangi Hediyeyi Alacağınıza Kara Veremiyor Musunuz?
+                    <br><br><br> Hadi Başlayalım Aşağıdaki Seçenekleri İşaretleyip Sihirbazı Çalıştırın.
+                </h3>
+            </div>
+
+            <div class="cinsiyet mt-5" id="cinsiyet">
+                <h3>Hediye Alacağınız Kişinin Cinsiyetini Seçin</h3>
+                <label for="erkekButonu">Erkek</label>
+                <input type="radio" name="cinsiyet" id="erkekButonu">
+
+                <input type="radio" name="cinsiyet" id="kadinButonu">
+                <label for="kadinButonu">Kadın</label>
+                <!--
+                <button type="submit" class="btn btn-danger" id="kadinButonu">Kadın</button> -->
+            </div>
+
+            <div class="yas-araligi mt-5" id="yasAraligi">
+                <h3>Hediye Alacağınız Kişinin Yaş Aralığını Seçin</h3>
+                <label for="yas16-20">16-20 Yaş</label>
+                <input type="radio" name="yas" id="yas16-20">
+                <label for="yas20-30">20-30 Yaş</label>
+                <input type="radio" name="yas" id="yas20-30">
+                <label for="yas30-45">30-45 Yaş</label>
+                <input type="radio" name="yas" id="yas30-45">
+                <label for="yas45ustu">45 Yaş Üstü</label>
+                <input type="radio" name="yas" id="yas45ustu">
+
+                <!-- <button type="submit" class="btn btn-warning" id="yas16-20"> 16-20 Yaş</button>
+                <button type="submit" class="btn btn-warning" id="yas20-30"> 20-30 Yaş</button>
+                <button type="submit" class="btn btn-warning" id="yas30-45"> 30-45 Yaş</button>
+                <button type="submit" class="btn btn-warning" id="yas45ustu"> 45 Yaş Üstü</button> -->
+            </div>
+
+            <div class="konsept mt-5" id="konsept">
+                <h3>Lütfen Bir Konsept Seçin</h3>
+
+                <label for="yilbasi"> Yılbaşı </label>
+                <input type="radio" name="konsept" id="yilbasi">
+                <label for="sevgili">Sevgililer Günü</label>
+                <input type="radio" name="konsept" id="sevgili">
+                <label for="dogum">Doğum Günü</label>
+                <input type="radio" name="konsept" id="dogum">
+                <label for="evlilik"> Evlilik Yıldönümü
+                </label>
+                <input type="radio" name="konsept" id="evlilik">
+
+
+                <!-- <button type="submit" class="btn btn-danger" id="yilbasi">Yılbaşı</button>
+                <button type="submit" class="btn btn-success" id="sevgili">Sevgililer Günü</button>
+                <button type="submit" class="btn btn-warning" id="dogum">Doğum Günü</button>
+                <button type="submit" class="btn btn-dark" id="evlilik">Evlilik Yıl Dönümü</button>        -->
+            </div>
+            <button type="submit" class="btn btn-success mt-5" id="kararButonu">Sihirbazı Çalıştır.</button>
+
+        </form>
+
+        <div class="urunalani container" style="display: block;">
+
+            <div class="row justify-content-center" id="urunAlani">
+                <!-- <div class="col-3 d-flex flex-column justify-content-end">
+                    <div class="baslik" id="baslik"></div>
+                    <div class="image" id="image"></div>
+                    <div class="price">
+                        <p id="price"></p>
+                        <p id="priceUp"></p>
+                    </div>
+                </div>
+                <div class="col-3 d-flex flex-column justify-content-end">
+                    <div class="baslik" id="baslik1"></div>
+                    <div class="image" id="image1"></div>
+                    <div class="price">
+                        <p id="price1"></p>
+                        <p id="priceUp1"></p>
+                    </div>
+                </div>
+                <div class="col-3 d-flex flex-column justify-content-end">
+                    <div class="baslik" id="baslik2"></div>
+                    <div class="image" id="image2"></div>
+                    <div class="price">
+                        <p id="price2"></p>
+                        <p id="priceUp2"></p>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="baslik" id="baslik3"></div>
+                    <div class="image" id="image3"></div>
+                    <div class="price">
+                        <p id="price3"></p>
+                        <p id="priceUp3"></p>
+                    </div>-->
+                </div> 
+            </div>
+
+        </div>
+    </div>
+
+    <script src="./choice.js"></script>
+</body>
+
+</html>
