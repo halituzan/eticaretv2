@@ -15,6 +15,9 @@ body{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #edf2f7;
+  position: relative;
+
+
 }
 a{color: var(--ana-renk);text-decoration: none;}
 a:active{color: var(--ana-renk);}
@@ -146,3 +149,26 @@ main{width: 80%;margin: 20px auto;}
     position: static;
     justify-content: space-around;
 }
+.ornament-bg {
+    position: absolute;
+    top: 10px;
+    left: -60px;
+    width: 300px;
+    z-index: -2;
+}
+.gift-bg {
+    position: absolute;
+    width: 100%;
+    background-image: url(../images/gift-bg.png);
+    background-repeat:no-repeat repeat;
+    height: 930px;
+    z-index: -3;
+    top: -49px;
+    margin: 0;
+    padding: 0;
+}
+/* .rotate {
+    transform: rotate(90deg);
+    top:0;
+    height:100%
+} */
