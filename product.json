@@ -7,7 +7,7 @@
         "currency": "&#8378;",
         "images": "./images/yeni.jpg",
         "etiket": {
-            "cinsiyet": "kadin",
+            "cinsiyet": "erkek",
             "yas": "yas16-20",
             "konsept": "yilbasi"
         }
@@ -33,7 +33,7 @@
         "currency": "&#8378;",
         "images": "./images/yeni3.jpg",
         "etiket": {
-            "cinsiyet": "kadin",
+            "cinsiyet": "erkek",
             "yas": "yas16-20",
             "konsept": "yilbasi"
         }
