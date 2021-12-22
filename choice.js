@@ -1,521 +1,129 @@
-    fetch('./product.json')
+fetch('./product.json')
     .then(response => response.json())
     .then((productData) => {
         let karar = document.querySelector("#karar");
         karar.addEventListener('submit', formSubmit);
-
         function formSubmit(event) {
             event.preventDefault()
-            const start = document.getElementById("kararButonu");
-            const startDiv = document.getElementById("start");
-            const cinsiyetDiv = document.getElementById("cinsiyet");
-            const yasAraligiDiv = document.getElementById("yasAraligi");
-            const konseptDiv = document.getElementById("konsept");
-            const urunler = document.getElementById("urunler");
+            productStructure = (cins, ys, kons) => {
+                for (i = 0; i < productTicketTitle(cins, ys, kons).length; i++) {
+                    const urunAlani = document.getElementById("urunAlani");
+                    urunAlani.innerHTML += `
+                    <div class="col-12 col-md-3 col-lg-4 p-0 d-flex flex-column justify-content-between align-items-baseline" style="min-height:650px" >
+                    <div class="choice-card card border border-success mb-3 me-3 d-flex flex-column justify-content-between">
+                        <a href="#" class="text-decoration-none"><h5 class="card-header bg-success text-light">${productTicketTitle(cins, ys, kons)[i]}</h5></a>
+                        <div class="image"><a href="#" class="text-decoration-none">
+                        <img src="${productTicketImage(cins, ys, kons)[i]}" alt="${productTicketTitle(cins, ys, kons)[i]}" style="width:100%;"></a>
 
-            const erkekButonu = document.getElementById("erkekButonu").checked;
-            const kadinButonu = document.getElementById("kadinButonu").checked;
-
-            const yas16_20 = document.getElementById("yas16-20").checked;
-            const yas20_30 = document.getElementById("yas20-30").checked;
-            const yas30_45 = document.getElementById("yas30-45").checked;
-            const yas45ustu = document.getElementById("yas45ustu").checked;
-
-            const yilbasi = document.getElementById("yilbasi").checked;
-            const sevgili = document.getElementById("sevgili").checked;
-            const dogum = document.getElementById("dogum").checked;
-            const evlilik = document.getElementById("evlilik").checked;
-
-            console.log(productData);
-
-            function productTicketTitle(cins,ys,kons) {
-                const titles = productData.reduce((ttl, prdct) => prdct.etiket.cinsiyet == cins && prdct.etiket.yas == ys && prdct.etiket.konsept == kons ? ttl + prdct.title + "," : ttl, "");
-                console.log(titles);
+                            <div class="card-body price d-flex justify-content-between fs-5">
+                            <a href="#"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="eye" class="svg-inline--fa fa-eye fa-w-18 text-success" width="30px" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z"></path></svg></a>
+                                <p class="fs-5 m-0 fw-bold text-success">${productTicketPrice(cins, ys, kons)[i]}${productData.products[0].currency} 
+                                <span class="text-decoration-line-through h3-w50 fs-4 m-0 fst-normal text-secondary"> ${productTicketPriceUp(cins, ys, kons)[i]}${productData.products[0].currency} </span>
+                                </p>
+                               
+                            </div>
+                        </div> 
+                        </div>
+                    </div>`}
+                return;
+            }
+            productTicketTitle = (cins, ys, kons) => {
+                const titles = productData.products.reduce((ttl, prdct) => prdct.etiket.cinsiyet == cins && prdct.etiket.yas == ys && prdct.etiket.konsept == kons ? ttl + prdct.title + "," : ttl, "");
                 let titleArr = titles.split(",");
                 titleArr.pop();
                 return titleArr;
             }
-            function productTicketImage(cins,ys,kons) {
-                const images = productData.reduce((img, prdct) => prdct.etiket.cinsiyet == cins && prdct.etiket.yas == ys && prdct.etiket.konsept == kons ? img + prdct.images + "," : img, "");
+
+            productTicketImage = (cins, ys, kons) => {
+                const images = productData.products.reduce((img, prdct) => prdct.etiket.cinsiyet == cins && prdct.etiket.yas == ys && prdct.etiket.konsept == kons ? img + prdct.images + "," : img, "");
                 let imageArr = images.split(",");
                 imageArr.pop();
                 return imageArr;
             }
-            function productTicketPrice(cins,ys,kons) {
-                const _price = productData.reduce((prc, prdct) => prdct.etiket.cinsiyet == cins && prdct.etiket.yas == ys && prdct.etiket.konsept == kons ? prc + prdct.price + "," : prc, "");
+            productTicketPrice = (cins, ys, kons) => {
+                const _price = productData.products.reduce((prc, prdct) => prdct.etiket.cinsiyet == cins && prdct.etiket.yas == ys && prdct.etiket.konsept == kons ? prc + prdct.price + "," : prc, "");
                 let priceArr = _price.split(",");
                 priceArr.pop();
                 return priceArr;
             }
-            function productTicketPriceUp(cins,ys,kons) {
-                const _priceUp = productData.reduce((prcup, prdct) => prdct.etiket.cinsiyet == cins && prdct.etiket.yas == ys && prdct.etiket.konsept == kons ? prcup + prdct.upPrice + "," : prcup, "");
+            productTicketPriceUp = (cins, ys, kons) => {
+                const _priceUp = productData.products.reduce((prcup, prdct) => prdct.etiket.cinsiyet == cins && prdct.etiket.yas == ys && prdct.etiket.konsept == kons ? prcup + prdct.upPrice + "," : prcup, "");
                 let priceUpArr = _priceUp.split(",");
                 priceUpArr.pop();
                 return priceUpArr;
             }
 
-            function productStructure(cins,ys,kons) {
-                let structure = urunAlani;
-                for (i = 0; i< productTicketTitle(cins,ys,kons).length; i++){
-                    const urunAlani = document.getElementById("urunAlani");
-                    urunAlani.innerHTML +=`
-                    <div class="col-12 col-md-3 col-lg-4 d-flex flex-column justify-content-between" style="min-height:500px">
-                        <div class="mb-1 pt-5">${productTicketTitle(cins,ys,kons)[i]}</div>
-                        <div class="image">
-                        <img src="${productTicketImage(cins,ys,kons)[i]}" alt="${productTicketTitle(cins,ys,kons)[i]}" style="width:100%;">
-                            <div class="price d-flex justify-content-evenly fs-5 my-3">
-                                <p class="fs-5">${productTicketPrice(cins,ys,kons)[i]}</p>
-                                <p class="text-decoration-line-through h3-w50 fs-4"> ${productTicketPriceUp(cins,ys,kons)[i]} </p>
-                            </div>
-                        </div> 
-                    </div>
-
-                    `
+            deliveryGender = () => {
+                const erkekButonu = document.getElementById("erkekButonu").checked;
+                const kadinButonu = document.getElementById("kadinButonu").checked;
+                if (erkekButonu) {
+                    return { cx: "erkek", cy: erkekButonu, };
+                } else if (kadinButonu) {
+                    return { cx: "kadin", cy: kadinButonu, };
+                } else {
+                    return alert("Cinsiyet seçmediniz.");
                 }
-                return structure;
-                
             }
-
-            
-            if (erkekButonu && yas16_20 && yilbasi) {
-                start.style.display = "none";
-                cinsiyetDiv.style.display = "none";
-                yasAraligiDiv.style.display = "none";
-                konseptDiv.style.display = "none";
-                urunler.style.display = "flex";
-                startDiv.style.display = "none";
-                let cx = "erkek";
-                let yx = "yas16-20";
-                let kx = "yilbasi";
-                productStructure(cx,yx,kx)
-               
-
-            } else if (erkekButonu && yas16_20 && sevgili) {
-                start.style.display = "none";
-                cinsiyetDiv.style.display = "none";
-                yasAraligiDiv.style.display = "none";
-                konseptDiv.style.display = "none";
-                urunler.style.display = "flex";
-                startDiv.style.display = "none";
-
-                let cx = "erkek";
-                let yx = "yas16-20";
-                let kx = "sevgili";
-                productStructure(cx,yx,kx)
-               
-              
-            } else if (erkekButonu && yas16_20 && dogum) {
-                start.style.display = "none";
-                cinsiyetDiv.style.display = "none";
-                yasAraligiDiv.style.display = "none";
-                konseptDiv.style.display = "none";
-                urunler.style.display = "flex";
-                startDiv.style.display = "none";
-                
-                let cx = "erkek";
-                let yx = "yas16-20";
-                let kx = "dogum";
-                productStructure(cx,yx,kx)
-
-            } else if (erkekButonu && yas16_20 && evlilik) {
-                start.style.display = "none";
-                cinsiyetDiv.style.display = "none";
-                yasAraligiDiv.style.display = "none";
-                konseptDiv.style.display = "none";
-                urunler.style.display = "flex";
-                startDiv.style.display = "none";
-               
-                let cx = "erkek";
-                let yx = "yas16-20";
-                let kx = "evlilik";
-                productStructure(cx,yx,kx)
-
-            } else if (erkekButonu && yas20_30 && yilbasi) {
-                start.style.display = "none";
-                cinsiyetDiv.style.display = "none";
-                yasAraligiDiv.style.display = "none";
-                konseptDiv.style.display = "none";
-                urunler.style.display = "flex";
-                startDiv.style.display = "none";
-
-                let cx = "erkek";
-                let yx = "yas20-30";
-                let kx = "yilbasi";
-                productStructure(cx,yx,kx)
-
-                // yazdırma kodları
-            } else if (erkekButonu && yas20_30 && sevgili) {
-                start.style.display = "none";
-                cinsiyetDiv.style.display = "none";
-                yasAraligiDiv.style.display = "none";
-                konseptDiv.style.display = "none";
-                urunler.style.display = "flex";
-                startDiv.style.display = "none";
-                let cx = "erkek";
-                let yx = "yas20-30";
-                let kx = "sevgili";
-                productStructure(cx,yx,kx)
-
-                // yazdırma kodları
-            } else if (erkekButonu && yas20_30 && dogum) {
-                start.style.display = "none";
-                cinsiyetDiv.style.display = "none";
-                yasAraligiDiv.style.display = "none";
-                konseptDiv.style.display = "none";
-                urunler.style.display = "flex";
-                startDiv.style.display = "none";
-                let cx = "erkek";
-                let yx = "yas20-30";
-                let kx = "dogum";
-                productStructure(cx,yx,kx)
-
-                // yazdırma kodları
-            } else if (erkekButonu && yas20_30 && evlilik) {
-                start.style.display = "none";
-                cinsiyetDiv.style.display = "none";
-                yasAraligiDiv.style.display = "none";
-                konseptDiv.style.display = "none";
-                urunler.style.display = "flex";
-                startDiv.style.display = "none";
-                let cx = "erkek";
-                let yx = "yas20-30";
-                let kx = "evlilik";
-                productStructure(cx,yx,kx)
-
-                // yazdırma kodları
-            } else if (erkekButonu && yas30_45 && yilbasi) {
-                start.style.display = "none";
-                cinsiyetDiv.style.display = "none";
-                yasAraligiDiv.style.display = "none";
-                konseptDiv.style.display = "none";
-                urunler.style.display = "flex";
-                startDiv.style.display = "none";
-
-                let cx = "erkek";
-                let yx = "yas30-45";
-                let kx = "yilbasi";
-                productStructure(cx,yx,kx)
-
-                // yazdırma kodları
-            } else if (erkekButonu && yas30_45 && sevgili) {
-                start.style.display = "none";
-                cinsiyetDiv.style.display = "none";
-                yasAraligiDiv.style.display = "none";
-                konseptDiv.style.display = "none";
-                urunler.style.display = "flex";
-                startDiv.style.display = "none";
-                let cx = "erkek";
-                let yx = "yas30-45";
-                let kx = "sevgili";
-                productStructure(cx,yx,kx)
-
-                // yazdırma kodları
-            } else if (erkekButonu && yas30_45 && dogum) {
-                start.style.display = "none";
-                cinsiyetDiv.style.display = "none";
-                yasAraligiDiv.style.display = "none";
-                konseptDiv.style.display = "none";
-                urunler.style.display = "flex";
-                startDiv.style.display = "none";
-                let cx = "erkek";
-                let yx = "yas30-45";
-                let kx = "dogum";
-                productStructure(cx,yx,kx)
-
-                // yazdırma kodları
-            } else if (erkekButonu && yas30_45 && evlilik) {
-                start.style.display = "none";
-                cinsiyetDiv.style.display = "none";
-                yasAraligiDiv.style.display = "none";
-                konseptDiv.style.display = "none";
-                urunler.style.display = "flex";
-                startDiv.style.display = "none";
-                let cx = "erkek";
-                let yx = "yas30-45";
-                let kx = "evlilik";
-                productStructure(cx,yx,kx)
-
-                // yazdırma kodları
-            } else if (erkekButonu && yas45ustu && yilbasi) {
-                start.style.display = "none";
-                cinsiyetDiv.style.display = "none";
-                yasAraligiDiv.style.display = "none";
-                konseptDiv.style.display = "none";
-                urunler.style.display = "flex";
-                startDiv.style.display = "none";
-
-                let cx = "erkek";
-                let yx = "yas45ustu";
-                let kx = "yilbasi";
-                productStructure(cx,yx,kx)
-
-                // yazdırma kodları
-            } else if (erkekButonu && yas45ustu && sevgili) {
-                start.style.display = "none";
-                cinsiyetDiv.style.display = "none";
-                yasAraligiDiv.style.display = "none";
-                konseptDiv.style.display = "none";
-                urunler.style.display = "flex";
-                startDiv.style.display = "none";
-                let cx = "erkek";
-                let yx = "yas45ustu";
-                let kx = "sevgili";
-                productStructure(cx,yx,kx)
-
-                // yazdırma kodları
-            } else if (erkekButonu && yas45ustu && dogum) {
-                start.style.display = "none";
-                cinsiyetDiv.style.display = "none";
-                yasAraligiDiv.style.display = "none";
-                konseptDiv.style.display = "none";
-                urunler.style.display = "flex";
-                startDiv.style.display = "none";
-                let cx = "erkek";
-                let yx = "yas45ustu";
-                let kx = "dogum";
-                productStructure(cx,yx,kx)
-
-                // yazdırma kodları
-            } else if (erkekButonu && yas45ustu && evlilik) {
-                start.style.display = "none";
-                cinsiyetDiv.style.display = "none";
-                yasAraligiDiv.style.display = "none";
-                konseptDiv.style.display = "none";
-                urunler.style.display = "flex";
-                startDiv.style.display = "none";
-                let cx = "erkek";
-                let yx = "yas45ustu";
-                let kx = "evlilik";
-                productStructure(cx,yx,kx)
-
-                // yazdırma kodları
-            } else if (kadinButonu && yas16_20 && yilbasi) {
-                start.style.display = "none";
-                cinsiyetDiv.style.display = "none";
-                yasAraligiDiv.style.display = "none";
-                konseptDiv.style.display = "none";
-                urunler.style.display = "flex";
-                startDiv.style.display = "none";
-
-                let cx = "kadin";
-                let yx = "yas16-20";
-                let kx = "yilbasi";
-                productStructure(cx,yx,kx)
-
-                // yazdırma kodları
-            } else if (kadinButonu && yas16_20 && sevgili) {
-                start.style.display = "none";
-                cinsiyetDiv.style.display = "none";
-                yasAraligiDiv.style.display = "none";
-                konseptDiv.style.display = "none";
-                urunler.style.display = "flex";
-                startDiv.style.display = "none";
-                let cx = "kadin";
-                let yx = "yas16-20";
-                let kx = "sevgili";
-                productStructure(cx,yx,kx)
-
-                // yazdırma kodları
-            } else if (kadinButonu && yas16_20 && dogum) {
-                start.style.display = "none";
-                cinsiyetDiv.style.display = "none";
-                yasAraligiDiv.style.display = "none";
-                konseptDiv.style.display = "none";
-                urunler.style.display = "flex";
-                startDiv.style.display = "none";
-
-                let cx = "kadin";
-                let yx = "yas16-20";
-                let kx = "dogum";
-                productStructure(cx,yx,kx)
-
-                // yazdırma kodları
-            } else if (kadinButonu && yas16_20 && evlilik) {
-                start.style.display = "none";
-                cinsiyetDiv.style.display = "none";
-                yasAraligiDiv.style.display = "none";
-                konseptDiv.style.display = "none";
-                urunler.style.display = "flex";
-                startDiv.style.display = "none";
-                let cx = "kadin";
-                let yx = "yas16-20";
-                let kx = "evlilik";
-                productStructure(cx,yx,kx)
-
-                // yazdırma kodları
-            } else if (kadinButonu && yas20_30 && yilbasi) {
-                start.style.display = "none";
-                cinsiyetDiv.style.display = "none";
-                yasAraligiDiv.style.display = "none";
-                konseptDiv.style.display = "none";
-                urunler.style.display = "flex";
-                startDiv.style.display = "none";
-                let cx = "kadin";
-                let yx = "yas20-30";
-                let kx = "yilbasi";
-                productStructure(cx,yx,kx)
-
-                // yazdırma kodları
-            } else if (kadinButonu && yas20_30 && sevgili) {
-                start.style.display = "none";
-                cinsiyetDiv.style.display = "none";
-                yasAraligiDiv.style.display = "none";
-                konseptDiv.style.display = "none";
-                urunler.style.display = "flex";
-                startDiv.style.display = "none";
-                let cx = "kadin";
-                let yx = "yas20-30";
-                let kx = "sevgili";
-                productStructure(cx,yx,kx)
-
-                // yazdırma kodları
-            } else if (kadinButonu && yas20_30 && dogum) {
-                start.style.display = "none";
-                cinsiyetDiv.style.display = "none";
-                yasAraligiDiv.style.display = "none";
-                konseptDiv.style.display = "none";
-                urunler.style.display = "flex";
-                startDiv.style.display = "none";
-
-                let cx = "kadin";
-                let yx = "yas20-30";
-                let kx = "dogum";
-                productStructure(cx,yx,kx)
-
-                // yazdırma kodları
-            } else if (kadinButonu && yas20_30 && evlilik) {
-                start.style.display = "none";
-                cinsiyetDiv.style.display = "none";
-                yasAraligiDiv.style.display = "none";
-                konseptDiv.style.display = "none";
-                urunler.style.display = "flex";
-                startDiv.style.display = "none";
-
-                let cx = "kadin";
-                let yx = "yas20-30";
-                let kx = "evlilik";
-                productStructure(cx,yx,kx)
-
-                // yazdırma kodları
-            } else if (kadinButonu && yas30_45 && yilbasi) {
-                start.style.display = "none";
-                cinsiyetDiv.style.display = "none";
-                yasAraligiDiv.style.display = "none";
-                konseptDiv.style.display = "none";
-                urunler.style.display = "flex";
-                startDiv.style.display = "none";
-
-                let cx = "kadin";
-                let yx = "yas30-45";
-                let kx = "yilbasi";
-                productStructure(cx,yx,kx)
-
-                // yazdırma kodları
-            } else if (kadinButonu && yas30_45 && sevgili) {
-                start.style.display = "none";
-                cinsiyetDiv.style.display = "none";
-                yasAraligiDiv.style.display = "none";
-                konseptDiv.style.display = "none";
-                urunler.style.display = "flex";
-                startDiv.style.display = "none";
-                let cx = "kadin";
-                let yx = "yas30-45";
-                let kx = "sevgili";
-                productStructure(cx,yx,kx)
-
-                // yazdırma kodları
-            } else if (kadinButonu && yas30_45 && dogum) {
-                start.style.display = "none";
-                cinsiyetDiv.style.display = "none";
-                yasAraligiDiv.style.display = "none";
-                konseptDiv.style.display = "none";
-                urunler.style.display = "flex";
-                startDiv.style.display = "none";
-                let cx = "kadin";
-                let yx = "yas30-45";
-                let kx = "dogum";
-                productStructure(cx,yx,kx)
-
-                // yazdırma kodları
-            } else if (kadinButonu && yas30_45 && evlilik) {
-                start.style.display = "none";
-                cinsiyetDiv.style.display = "none";
-                yasAraligiDiv.style.display = "none";
-                konseptDiv.style.display = "none";
-                urunler.style.display = "flex";
-                startDiv.style.display = "none";
-                let cx = "kadin";
-                let yx = "yas30-45";
-                let kx = "evlilik";
-                productStructure(cx,yx,kx)
-
-                // yazdırma kodları
-            } else if (kadinButonu && yas45ustu && yilbasi) {
-                start.style.display = "none";
-                cinsiyetDiv.style.display = "none";
-                yasAraligiDiv.style.display = "none";
-                konseptDiv.style.display = "none";
-                urunler.style.display = "flex";
-                startDiv.style.display = "none";
-                let cx = "kadin";
-                let yx = "yas45ustu";
-                let kx = "yilbasi";
-                productStructure(cx,yx,kx)
-
-                // yazdırma kodları
-            } else if (kadinButonu && yas45ustu && sevgili) {
-                start.style.display = "none";
-                cinsiyetDiv.style.display = "none";
-                yasAraligiDiv.style.display = "none";
-                konseptDiv.style.display = "none";
-                urunler.style.display = "flex";
-                startDiv.style.display = "none";
-                let cx = "kadin";
-                let yx = "yas45ustu";
-                let kx = "sevgili";
-                productStructure(cx,yx,kx)
-
-                // yazdırma kodları
-            } else if (kadinButonu && yas45ustu && dogum) {
-                start.style.display = "none";
-                cinsiyetDiv.style.display = "none";
-                yasAraligiDiv.style.display = "none";
-                konseptDiv.style.display = "none";
-                urunler.style.display = "flex";
-                startDiv.style.display = "none";
-                let cx = "kadin";
-                let yx = "yas45ustu";
-                let kx = "dogum";
-                productStructure(cx,yx,kx)
-
-                // yazdırma kodları
-            } else if (kadinButonu && yas45ustu && evlilik) {
-                start.style.display = "none";
-                cinsiyetDiv.style.display = "none";
-                yasAraligiDiv.style.display = "none";
-                konseptDiv.style.display = "none";
-                urunler.style.display = "flex";
-                startDiv.style.display = "none";
-                let cx = "kadin";
-                let yx = "yas45ustu";
-                let kx = "evlilik";
-                productStructure(cx,yx,kx)
-
-                // yazdırma kodları
-            } else {
-                start.style.display = "none";
-                cinsiyetDiv.style.display = "none";
-                yasAraligiDiv.style.display = "none";
-                konseptDiv.style.display = "none";
-                urunler.style.display = "flex";
-                startDiv.style.display = "none";
-
-                urunAlani.innerHTML = `
-                <h2 class=" my-5 pt-5">Seçeneklerden birini seçmediniz lütfen tüm seçenekleri seçin.</h2>
-                `;}
+            deliveryAge = () => {
+                const yas16_20 = document.getElementById("yas16-20").checked;
+                const yas20_30 = document.getElementById("yas20-30").checked;
+                const yas30_45 = document.getElementById("yas30-45").checked;
+                const yas45ustu = document.getElementById("yas45ustu").checked;
+                if (yas16_20) {
+                    return { yx: "yas16-20", yy: yas16_20, };
+                } else if (yas20_30) {
+                    return { yx: "yas20-30", yy: yas20_30, };
+                } else if (yas30_45) {
+                    return { yx: "yas30-45", yy: yas30_45, };
+                } else if (yas45ustu) {
+                    return { yx: "yas45ustu", yy: yas45ustu, };
+                } else {
+                    return alert("Yaş seçmediniz.");
+                }
+            }
+            deliveryConsept = () => {
+                const yilbasi = document.getElementById("yilbasi").checked;
+                const sevgili = document.getElementById("sevgili").checked;
+                const dogum = document.getElementById("dogum").checked;
+                const evlilik = document.getElementById("evlilik").checked;
+                if (yilbasi) {
+                    return { kx: "yilbasi", ky: yilbasi, };
+                } else if (sevgili) {
+                    return { kx: "sevgili", ky: sevgili, };
+                } else if (dogum) {
+                    return { kx: "dogum", ky: dogum, };
+                } else if (evlilik) {
+                    return { kx: "evlilik", ky: evlilik, };
+                } else {
+                    return alert("Konsept seçmediniz.");
+                }
+            }
+            productCondition = (check1, check2, check3, cins, ys, kons) => {
+                const start = document.getElementById("kararButonu");
+                const startDiv = document.getElementById("start");
+                const cinsiyetDiv = document.getElementById("cinsiyet");
+                const yasAraligiDiv = document.getElementById("yasAraligi");
+                const konseptDiv = document.getElementById("konsept");
+                const urunler = document.getElementById("urunler");
+                if (check1 && check2 && check3) {
+                    start.style.display = "none";
+                    cinsiyetDiv.style.display = "none";
+                    yasAraligiDiv.style.display = "none";
+                    konseptDiv.style.display = "none";
+                    urunler.style.display = "flex";
+                    startDiv.style.display = "none";
+                    return productStructure(cins, ys, kons)
+                } else {
+                    return null;
+                }
+            }
+            let gender = deliveryGender();
+            let age = deliveryAge();
+            let consept = deliveryConsept();
+            productCondition(gender.cy, age.yy, consept.ky, gender.cx, age.yx, consept.kx);
         }
     })
-.catch((err) => console.log("Error"));
+    .catch((err) => console.log("Error"));
 
 // const st = {};
 
